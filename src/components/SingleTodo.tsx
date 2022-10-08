@@ -34,7 +34,16 @@ const SingleTodo = ({ index, todo, todos, setTodos, localname }: Props) => {
         .filter((todo) => todo.id !== id)
     );
 
-    localStorage.setItem(localname, JSON.stringify(todos));
+    localStorage.setItem(
+      localname,
+      JSON.stringify(
+        todos
+          .filter((todo) => {
+            return todo !== null;
+          })
+          .filter((todo) => todo.id !== id)
+      )
+    );
   };
 
   const handleEdit = (e: React.FormEvent, id: number) => {
