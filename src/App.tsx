@@ -98,10 +98,10 @@ const App: React.FC = () => {
         <TodoList
           todos={todos}
           setTodos={setTodos}
-          completedTodos={completedTodos}
-          setCompletedTodos={setcompletedTodos}
           WIPTodos={WIPTodos}
           setWIPTodos={setWIPTodos}
+          completedTodos={completedTodos}
+          setCompletedTodos={setcompletedTodos}
         />
       </div>
     </DragDropContext>

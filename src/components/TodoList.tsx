@@ -44,6 +44,7 @@ const TodoList: React.FC<Props> = ({
                   key={todo.id}
                   todos={todos}
                   setTodos={setTodos}
+                  localname="LocalTodos"
                 />
               ))}
             {provided.placeholder}
@@ -69,6 +70,7 @@ const TodoList: React.FC<Props> = ({
                 key={todo.id}
                 todos={WIPTodos}
                 setTodos={setWIPTodos}
+                localname="LocalWIPTodos"
               />
             ))}
             {provided.placeholder}
@@ -96,6 +98,7 @@ const TodoList: React.FC<Props> = ({
                   key={todo.id}
                   todos={completedTodos}
                   setTodos={setCompletedTodos}
+                  localname="LocalCompletedTodos"
                 />
               ))}
             {provided.placeholder}
