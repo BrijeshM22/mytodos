@@ -10,9 +10,10 @@ type Props = {
   todo: Todo;
   todos: Todo[];
   setTodos: React.Dispatch<React.SetStateAction<Todo[]>>;
+  localname: string;
 };
 
-const SingleTodo = ({ index, todo, todos, setTodos }: Props) => {
+const SingleTodo = ({ index, todo, todos, setTodos, localname }: Props) => {
   const [edit, setEdit] = useState<boolean>(false);
   const [editTodo, setEditTodo] = useState<string>(todo.todo);
 
@@ -32,6 +33,8 @@ const SingleTodo = ({ index, todo, todos, setTodos }: Props) => {
         })
         .filter((todo) => todo.id !== id)
     );
+
+    localStorage.setItem(localname, JSON.stringify(todos));
   };
 
   const handleEdit = (e: React.FormEvent, id: number) => {
