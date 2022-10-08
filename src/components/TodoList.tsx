@@ -54,7 +54,7 @@ const TodoList: React.FC<Props> = ({
             ref={provided.innerRef}
             {...provided.droppableProps}
           >
-            <span className="todos__heading">Doing</span>
+            <span className="todos__heading">In Progress</span>
             {WIPTodos?.map((todo, index) => (
               <SingleTodo
                 index={index}
@@ -77,7 +77,7 @@ const TodoList: React.FC<Props> = ({
             ref={provided.innerRef}
             {...provided.droppableProps}
           >
-            <span className="todos__heading">Done</span>
+            <span className="todos__heading">Completed</span>
             {completedTodos?.map((todo, index) => (
               <SingleTodo
                 index={index}
