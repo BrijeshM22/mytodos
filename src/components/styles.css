@@ -75,7 +75,7 @@
 }
 
 .todos__heading {
-  font-size: 30px;
+  font-size: 1.75rem;
   color: white;
   text-align: center;
 }
@@ -147,6 +147,10 @@
   .container {
     width: 95%;
     flex-direction: column;
+  }
+  .todos__heading {
+    font-size: 1.5rem;
+    text-align: left;
   }
 }
 

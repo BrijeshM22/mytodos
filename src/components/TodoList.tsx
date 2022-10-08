@@ -19,29 +19,34 @@ const TodoList: React.FC<Props> = ({
   WIPTodos,
   setWIPTodos,
   completedTodos,
-  setCompletedTodos
+  setCompletedTodos,
 }) => {
   return (
     <div className="container">
       <Droppable droppableId="TodosList">
         {(provided, snapshot) => (
           <div
-            className={`todos tdos ${snapshot.isDraggingOver ? "dragactive" : ""}`}
+            className={`todos tdos ${
+              snapshot.isDraggingOver ? "dragactive" : ""
+            }`}
             ref={provided.innerRef}
             {...provided.droppableProps}
           >
             <span className="todos__heading">To do</span>
-            {todos?.map((todo, index) => (
-              <SingleTodo
-                index={index}
-                todo={todo}
-                key={todo.id}
-                todos={todos}
-                setTodos={setTodos}
-              />
-            ))}
+            {todos
+              ?.filter((todo) => {
+                return todo !== null;
+              })
+              .map((todo, index) => (
+                <SingleTodo
+                  index={index}
+                  todo={todo}
+                  key={todo.id}
+                  todos={todos}
+                  setTodos={setTodos}
+                />
+              ))}
             {provided.placeholder}
-            
           </div>
         )}
       </Droppable>
@@ -55,7 +60,9 @@ const TodoList: React.FC<Props> = ({
             {...provided.droppableProps}
           >
             <span className="todos__heading">In Progress</span>
-            {WIPTodos?.map((todo, index) => (
+            {WIPTodos?.filter((todo) => {
+              return todo !== null;
+            }).map((todo, index) => (
               <SingleTodo
                 index={index}
                 todo={todo}
@@ -78,15 +85,19 @@ const TodoList: React.FC<Props> = ({
             {...provided.droppableProps}
           >
             <span className="todos__heading">Completed</span>
-            {completedTodos?.map((todo, index) => (
-              <SingleTodo
-                index={index}
-                todo={todo}
-                key={todo.id}
-                todos={completedTodos}
-                setTodos={setCompletedTodos}
-              />
-            ))}
+            {completedTodos
+              ?.filter((todo) => {
+                return todo !== null;
+              })
+              .map((todo, index) => (
+                <SingleTodo
+                  index={index}
+                  todo={todo}
+                  key={todo.id}
+                  todos={completedTodos}
+                  setTodos={setCompletedTodos}
+                />
+              ))}
             {provided.placeholder}
           </div>
         )}

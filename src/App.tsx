@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { DragDropContext, DropResult } from "react-beautiful-dnd";
 
 import "./App.css";
@@ -9,13 +9,33 @@ import { Todo } from "./model";
 const App: React.FC = () => {
   const [todo, setTodo] = useState<string>("");
   const [todos, setTodos] = useState<Todo[]>([]);
-  const [completedTodos, setcompletedTodos] = useState<Todo[]>([]);
   const [WIPTodos, setWIPTodos] = useState<Todo[]>([]);
+  const [completedTodos, setcompletedTodos] = useState<Todo[]>([]);
+
+  useEffect(() => {
+    let todolist = localStorage.getItem("LocalTodos");
+    if (todolist) {
+      const storedList = JSON.parse(todolist);
+      setTodos(storedList);
+    }
+    let WIPlist = localStorage.getItem("LocalWIPTodos");
+    if (WIPlist) {
+      const Progresslist = JSON.parse(WIPlist);
+      setWIPTodos(Progresslist);
+    }
+    let Completedlist = localStorage.getItem("LocalCompletedTodos");
+    if (Completedlist) {
+      const completelist = JSON.parse(Completedlist);
+      setcompletedTodos(completelist);
+    }
+  }, []);
 
   const handleAdd = (e: React.FormEvent) => {
     e.preventDefault();
     if (todo) {
-      setTodos([...todos, { id: Date.now(), todo, isCompleted: false }]);
+      const newTask = { id: Date.now(), todo, isCompleted: false };
+      setTodos([...todos, newTask]);
+      localStorage.setItem("LocalTodos", JSON.stringify([...todos, newTask]));
       setTodo("");
     }
   };
@@ -55,9 +75,19 @@ const App: React.FC = () => {
       complete.splice(destination.index, 0, add);
     }
 
-    setcompletedTodos(complete);
-    setWIPTodos(progress);
     setTodos(active);
+    setWIPTodos(progress);
+    setcompletedTodos(complete);
+
+    localStorage.setItem("LocalTodos", JSON.stringify([...todos, setTodos]));
+    localStorage.setItem(
+      "LocalWIPTodos",
+      JSON.stringify([...WIPTodos, setWIPTodos])
+    );
+    localStorage.setItem(
+      "LocalCompletedTodos",
+      JSON.stringify([...completedTodos, setcompletedTodos])
+    );
   };
 
   return (

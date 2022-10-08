@@ -25,13 +25,23 @@ const SingleTodo = ({ index, todo, todos, setTodos }: Props) => {
   // };
 
   const handleDelete = (id: number) => {
-    setTodos(todos.filter((todo) => todo.id !== id));
+    setTodos(
+      todos
+        .filter((todo) => {
+          return todo !== null;
+        })
+        .filter((todo) => todo.id !== id)
+    );
   };
 
   const handleEdit = (e: React.FormEvent, id: number) => {
     e.preventDefault();
     setTodos(
-      todos.map((todo) => (todo.id === id ? { ...todo, todo: editTodo } : todo))
+      todos
+        .filter((todo) => {
+          return todo !== null;
+        })
+        .map((todo) => (todo.id === id ? { ...todo, todo: editTodo } : todo))
     );
     setEdit(false);
   };
@@ -44,9 +54,9 @@ const SingleTodo = ({ index, todo, todos, setTodos }: Props) => {
 
   return (
     <Draggable draggableId={todo.id.toString()} index={index}>
-      {(provided,snapshot) => (
+      {(provided, snapshot) => (
         <form
-          className={`todos__single ${snapshot.isDragging ? "drag": ""}`}
+          className={`todos__single ${snapshot.isDragging ? "drag" : ""}`}
           onSubmit={(e) => handleEdit(e, todo.id)}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
@@ -75,7 +85,7 @@ const SingleTodo = ({ index, todo, todos, setTodos }: Props) => {
               {!edit ? <AiFillEdit /> : <MdDone />}
             </span>
             <span className="icon" onClick={() => handleDelete(todo.id)}>
-              <MdDelete /> 
+              <MdDelete />
             </span>
             {/* <span className="icon" onClick={() => handleDone(todo.id)}>
               <MdDone />
