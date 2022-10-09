@@ -19,16 +19,24 @@ const SingleTodo = ({ index, todo, todos, setTodos, localname }: Props) => {
 
   const handleDone = (id: number) => {
     setTodos(
-      todos.map((todo) =>
-        todo.id === id ? { ...todo, isCompleted: !todo.isCompleted } : todo
-      )
+      todos
+        .filter((todo) => {
+          return todo !== null;
+        })
+        .map((todo) =>
+          todo.id === id ? { ...todo, isCompleted: !todo.isCompleted } : todo
+        )
     );
     localStorage.setItem(
       localname,
       JSON.stringify(
-        todos.map((todo) =>
-          todo.id === id ? { ...todo, isCompleted: !todo.isCompleted } : todo
-        )
+        todos
+          .filter((todo) => {
+            return todo !== null;
+          })
+          .map((todo) =>
+            todo.id === id ? { ...todo, isCompleted: !todo.isCompleted } : todo
+          )
       )
     );
   };

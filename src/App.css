@@ -23,8 +23,15 @@
   font-family: "Neucha", cursive;
   margin: 30px 0;
   text-align: center;
-  text-transform: uppercase;
+  /* text-transform: uppercase; */
   z-index: 1;
+  /* font-weight: bolder; */
+  color: white;
+  --color: hsl(200, 100%, 6%, 0.7);
+    background-color: var(--color);
+    box-shadow: 0 0 15px 0 var(--color);
+  padding: 0px 10px;
+  border-radius: 10px;
 }
 
 @media (max-width: 700px) {

@@ -68,6 +68,7 @@
   font-size: 1.75rem;
   color: white;
   text-align: center;
+  font-family: "Neucha", cursive;
 }
 
 .todos__single {
@@ -130,20 +131,29 @@
   .input {
     width: 95%;
   }
-  .todos {
-    width: 95%;
-    margin-bottom: 10px;
-  }
   .container {
     width: 95%;
     flex-direction: column;
+  }
+  .todos {
+    width: 93%;
+    margin-bottom: 10px;
   }
   .todos__heading {
     font-size: 1.5rem;
     text-align: left;
   }
 }
-
+@media (max-width: 400px) {
+  .container {
+      width: 95%;
+      flex-direction: column;
+    }
+  
+    .todos {
+      width: 92%;
+      margin-bottom: 10px;
+    }}
 /* .tdos {
   background-color: hsl(200, 100%, 91%,0);
 }
