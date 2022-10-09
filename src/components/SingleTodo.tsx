@@ -17,13 +17,21 @@ const SingleTodo = ({ index, todo, todos, setTodos, localname }: Props) => {
   const [edit, setEdit] = useState<boolean>(false);
   const [editTodo, setEditTodo] = useState<string>(todo.todo);
 
-  // const handleDone = (id: number) => {
-  //   setTodos(
-  //     todos.map((todo) =>
-  //       todo.id === id ? { ...todo, isCompleted: !todo.isCompleted } : todo
-  //     )
-  //   );
-  // };
+  const handleDone = (id: number) => {
+    setTodos(
+      todos.map((todo) =>
+        todo.id === id ? { ...todo, isCompleted: !todo.isCompleted } : todo
+      )
+    );
+    localStorage.setItem(
+      localname,
+      JSON.stringify(
+        todos.map((todo) =>
+          todo.id === id ? { ...todo, isCompleted: !todo.isCompleted } : todo
+        )
+      )
+    );
+  };
 
   const handleDelete = (id: number) => {
     setTodos(
@@ -55,6 +63,18 @@ const SingleTodo = ({ index, todo, todos, setTodos, localname }: Props) => {
         })
         .map((todo) => (todo.id === id ? { ...todo, todo: editTodo } : todo))
     );
+
+    localStorage.setItem(
+      localname,
+      JSON.stringify(
+        todos
+          .filter((todo) => {
+            return todo !== null;
+          })
+          .map((todo) => (todo.id === id ? { ...todo, todo: editTodo } : todo))
+      )
+    );
+
     setEdit(false);
   };
 
@@ -82,9 +102,19 @@ const SingleTodo = ({ index, todo, todos, setTodos, localname }: Props) => {
               className="todos__single--text editmode"
             />
           ) : todo.isCompleted ? (
-            <s className="todos__single--text">{todo.todo}</s>
+            <s
+              className="todos__single--text"
+              onClick={() => handleDone(todo.id)}
+            >
+              {todo.todo}
+            </s>
           ) : (
-            <span className="todos__single--text">{todo.todo}</span>
+            <span
+              className="todos__single--text"
+              onClick={() => handleDone(todo.id)}
+            >
+              {todo.todo}
+            </span>
           )}
           <div>
             <span
