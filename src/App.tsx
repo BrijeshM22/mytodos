@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { DragDropContext, DropResult } from "react-beautiful-dnd";
 
 import "./App.css";
-import InputField from "./components/InputField";
+// import InputField from "./components/InputField";
 import TodoList from "./components/TodoList";
 import { Todo } from "./model";
 
@@ -30,15 +30,15 @@ const App: React.FC = () => {
     }
   }, []);
 
-  const handleAdd = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (todo) {
-      const newTask = { id: Date.now(), todo, isCompleted: false };
-      setTodos([...todos, newTask]);
-      localStorage.setItem("LocalTodos", JSON.stringify([...todos, newTask]));
-      setTodo("");
-    }
-  };
+  // const handleAdd = (e: React.FormEvent) => {
+  //   e.preventDefault();
+  //   if (todo) {
+  //     const newTask = { id: Date.now(), todo, isCompleted: false };
+  //     setTodos([...todos, newTask]);
+  //     localStorage.setItem("LocalTodos", JSON.stringify([...todos, newTask]));
+  //     setTodo("");
+  //   }
+  // };
 
   const onDragEnd = (result: DropResult) => {
     const { source, destination } = result;
@@ -94,8 +94,10 @@ const App: React.FC = () => {
     <DragDropContext onDragEnd={onDragEnd}>
       <div className="App">
         <span className="heading">To-do list</span>
-        <InputField todo={todo} setTodo={setTodo} handleAdd={handleAdd} />
+        {/* <InputField todo={todo} setTodo={setTodo} handleAdd={handleAdd} /> */}
         <TodoList
+          todo={todo}
+          setTodo={setTodo}
           todos={todos}
           setTodos={setTodos}
           WIPTodos={WIPTodos}

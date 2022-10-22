@@ -8,7 +8,7 @@
 .input__box {
   width: 100%;
   border-radius: 15px;
-  padding: 20px 30px;
+  padding: 15px 20px;
   font-size: 1.25rem;
   border: none;
   transition: 0.2s;
@@ -29,7 +29,7 @@
   right: 0px;
   display: flex;
   font-size: 2.25rem;
-  margin: 15px;
+  margin: 10px;
   border: none;
   --color: hsl(200, 100%, 6%, 0);
   background-color: var(--color);
@@ -65,15 +65,24 @@
 }
 
 .todos__heading {
-  font-size: 1.75rem;
+  font-size: 1.5rem;
   color: white;
-  text-align: center;
+  display: flex;
+  justify-content: space-between;
   font-family: "Neucha", cursive;
 }
-
+.todos__heading > button{
+  width: 40px;
+  height: 40px;
+  background: transparent;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
 .todos__single {
   display: flex;
   align-items: center;
+  font-size: 0.50rem;
   padding: 20px;
   margin-top: 15px;
   z-index: 1;
@@ -87,7 +96,18 @@
   color: white;
   font-weight: lighter;
 }
-
+.subPlusIcon {
+  font-size: 0.50rem;
+  padding: 10px;
+  margin-top: 10px;
+  z-index: 1;  
+}
+.subPlusIcon>button {
+  font-size: large;
+  color: white;
+   background: transparent; 
+  border: none; 
+}
 .todos__single:hover {
   transform: scale(1.01);
   box-shadow: 0 0 5px black;
@@ -96,7 +116,6 @@
 .todos__single--text {
   padding: 5px;
   border: none;
-  font-size: 16px;
   flex: 1;
   font-family: "Neucha", cursive;
   font-size: 1.25rem;
@@ -118,7 +137,7 @@
 
 .icon {
   margin-left: 10px;
-  font-size: 25px;
+  font-size: 20px;
   cursor: pointer;
 }
 @media (max-width: 1100px) {

@@ -1,10 +1,15 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./styles.css";
 import { Todo } from "../model";
 import SingleTodo from "./SingleTodo";
 import { Droppable } from "react-beautiful-dnd";
+import { BsPlusLg } from "react-icons/bs";
+// import InputField from "./InputField";
+import SubInputField from "./SubInputField";
 
 interface Props {
+  todo: string;
+  setTodo: React.Dispatch<React.SetStateAction<string>>;
   todos: Todo[];
   setTodos: React.Dispatch<React.SetStateAction<Todo[]>>;
   WIPTodos: Todo[];
@@ -12,8 +17,9 @@ interface Props {
   completedTodos: Todo[];
   setCompletedTodos: React.Dispatch<React.SetStateAction<Todo[]>>;
 }
-
 const TodoList: React.FC<Props> = ({
+  todo,
+  setTodo,
   todos,
   setTodos,
   WIPTodos,
@@ -21,6 +27,66 @@ const TodoList: React.FC<Props> = ({
   completedTodos,
   setCompletedTodos,
 }) => {
+  const handleAddTodo = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (todo) {
+      const newTask = { id: Date.now(), todo, isCompleted: false };
+      setTodos([...todos, newTask]);
+      localStorage.setItem("LocalTodos", JSON.stringify([...todos, newTask]));
+      setTodo("");
+      setShowBox(false);
+    } else {
+      setShowBox(true);
+    }
+  };
+
+  const handleAddWIP = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (todo) {
+      const newTask = { id: Date.now(), todo, isCompleted: false };
+      setWIPTodos([...WIPTodos, newTask]);
+      localStorage.setItem(
+        "LocalWIPTodos",
+        JSON.stringify([...WIPTodos, newTask])
+      );
+      setTodo("");
+      setShowBoxWIP(false);
+    } else {
+      setShowBoxWIP(true);
+    }
+  };
+
+  const handleAddCompleted = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (todo) {
+      const newTask = { id: Date.now(), todo, isCompleted: false };
+      setCompletedTodos([...completedTodos, newTask]);
+      localStorage.setItem(
+        "LocalCompletedTodos",
+        JSON.stringify([...completedTodos, newTask])
+      );
+      setTodo("");
+      setShowBoxComp(false);
+    } else {
+      setShowBoxComp(true);
+    }
+  };
+
+  const [showBox, setShowBox] = useState<boolean>(false);
+  const [showBoxWIP, setShowBoxWIP] = useState<boolean>(false);
+  const [showBoxComp, setShowBoxComp] = useState<boolean>(false);
+
+  const subinputRef = useRef<HTMLInputElement>(null);
+
+  const handlePlus = () => {
+    setShowBox(true);
+    subinputRef.current?.focus();
+  };
+
+  useEffect(() => {
+    subinputRef.current?.focus();
+  }, [showBox]);
+
   return (
     <div className="container">
       <Droppable droppableId="TodosList">
@@ -32,7 +98,9 @@ const TodoList: React.FC<Props> = ({
             ref={provided.innerRef}
             {...provided.droppableProps}
           >
-            <span className="todos__heading">To do</span>
+            <span className="todos__heading">
+              <span>To do</span>
+            </span>
             {todos
               ?.filter((todo) => {
                 return todo !== null;
@@ -48,6 +116,23 @@ const TodoList: React.FC<Props> = ({
                 />
               ))}
             {provided.placeholder}
+            <div>
+              {showBox ? (
+                <SubInputField
+                  todo={todo}
+                  setTodo={setTodo}
+                  handleAdd={handleAddTodo}
+                  showBox={showBox}
+                  setShowBox={setShowBox}
+                />
+              ) : (
+                <div className="subPlusIcon">
+                  <button onClick={handlePlus}>
+                    <BsPlusLg />
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
         )}
       </Droppable>
@@ -60,7 +145,12 @@ const TodoList: React.FC<Props> = ({
             ref={provided.innerRef}
             {...provided.droppableProps}
           >
-            <span className="todos__heading">In Progress</span>
+            <span className="todos__heading">
+              <span>In Progress</span>
+              {/* <button>
+                <BsPlusLg />
+              </button> */}
+            </span>
             {WIPTodos?.filter((todo) => {
               return todo !== null;
             }).map((todo, index) => (
@@ -74,6 +164,23 @@ const TodoList: React.FC<Props> = ({
               />
             ))}
             {provided.placeholder}
+            <div>
+              {showBoxWIP ? (
+                <SubInputField
+                  todo={todo}
+                  setTodo={setTodo}
+                  handleAdd={handleAddWIP}
+                  showBox={showBoxWIP}
+                  setShowBox={setShowBoxWIP}
+                />
+              ) : (
+                <div className="subPlusIcon">
+                  <button onClick={() => setShowBoxWIP(!showBoxWIP)}>
+                    <BsPlusLg />
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
         )}
       </Droppable>
@@ -86,7 +193,12 @@ const TodoList: React.FC<Props> = ({
             ref={provided.innerRef}
             {...provided.droppableProps}
           >
-            <span className="todos__heading">Completed</span>
+            <span className="todos__heading">
+              <span>Completed</span>
+              {/* <button>
+                <BsPlusLg />
+              </button> */}
+            </span>
             {completedTodos
               ?.filter((todo) => {
                 return todo !== null;
@@ -102,6 +214,23 @@ const TodoList: React.FC<Props> = ({
                 />
               ))}
             {provided.placeholder}
+            <div>
+              {showBoxComp ? (
+                <SubInputField
+                  todo={todo}
+                  setTodo={setTodo}
+                  handleAdd={handleAddCompleted}
+                  showBox={showBoxComp}
+                  setShowBox={setShowBoxComp}
+                />
+              ) : (
+                <div className="subPlusIcon">
+                  <button onClick={() => setShowBoxComp(!showBoxComp)}>
+                    <BsPlusLg />
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
         )}
       </Droppable>
